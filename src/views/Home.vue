@@ -46,7 +46,7 @@ export default {
 
             this.latitude = res.data.results[0].geometry.location.lat;
             this.longitude = res.data.results[0].geometry.location.lng;
-            this.getWeatherDetailsByCoordinates(city);
+            this.getWeatherDetailsByCoordinates(city.toUpperCase());
           } else {
             this.showAlert("Please enter a valid city name");
           }
@@ -102,7 +102,7 @@ export default {
         this.latitude = pos.coords.latitude;
         this.longitude = pos.coords.longitude;
 
-        this.getWeatherDetailsByCoordinates("CurrentCity");
+        this.getWeatherDetailsByCoordinates("CURRENTCITY");
       },
       err => {
         console.log(err.message);
