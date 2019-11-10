@@ -46,7 +46,7 @@ export default {
 
             this.latitude = res.data.results[0].geometry.location.lat;
             this.longitude = res.data.results[0].geometry.location.lng;
-            this.getWeatherDetailsByCoordinates();
+            this.getWeatherDetailsByCoordinates(city);
           } else {
             this.showAlert("Please enter a valid city name");
           }
@@ -54,17 +54,33 @@ export default {
         .catch(err => this.showAlert(err.message));
     },
 
-    getWeatherDetailsByCoordinates() {
-      axios
-        .get(
-          `https://api.darksky.net/forecast/${process.env.VUE_APP_DARKSKY_API_CODE}/${this.latitude},${this.longitude}?exclude=minutely,hourly,flags`
-        )
-        .then(res => {
-          if (res.status === 200) {
-            this.weatherresults = res.data.daily.data;
-          }
-        })
-        .catch(err => this.showAlert(err.message));
+    getWeatherDetailsByCoordinates(city) {
+      //If result of same city in localstorage, dont call API
+      this.weatherresults = null;
+      if (localStorage.getItem(city)) {
+        try {
+          this.weatherresults = JSON.parse(localStorage.getItem(city));
+        } catch (e) {
+          localStorage.removeItem(city);
+        }
+      }
+      if (null == this.weatherresults) {
+        console.log("Not in local storage");
+        axios
+          .get(
+            `https://api.darksky.net/forecast/${process.env.VUE_APP_DARKSKY_API_CODE}/${this.latitude},${this.longitude}?exclude=minutely,hourly,flags`
+          )
+          .then(res => {
+            if (res.status === 200) {
+              this.weatherresults = res.data.daily.data;
+
+              const parsedResult = JSON.stringify(this.weatherresults);
+              localStorage.setItem(city, parsedResult);
+              console.log(city);
+            }
+          })
+          .catch(err => this.showAlert(err.message));
+      }
     },
     showAlert(msg) {
       return this.$ionic.alertController
@@ -86,7 +102,7 @@ export default {
         this.latitude = pos.coords.latitude;
         this.longitude = pos.coords.longitude;
 
-        this.getWeatherDetailsByCoordinates();
+        this.getWeatherDetailsByCoordinates("CurrentCity");
       },
       err => {
         console.log(err.message);
