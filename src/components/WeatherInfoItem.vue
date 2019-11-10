@@ -2,37 +2,41 @@
   <ion-card v-if="weatherresult">
     <ion-card-header>
       <ion-card-title>{{new Date(weatherresult.time*1000).toLocaleDateString()}}</ion-card-title>
-      <ion-col>
-        <ion-item>
-          <ion-label>Summary:</ion-label>
-          <ion-card-subtitle>{{weatherresult.summary}}</ion-card-subtitle>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label>High Temp:</ion-label>
-          <ion-card-subtitle>{{weatherresult.temperatureHigh}}</ion-card-subtitle>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label>High Temp Time:</ion-label>
-          <ion-card-subtitle>{{new Date(weatherresult.temperatureHighTime*1000).toLocaleTimeString()}}</ion-card-subtitle>
-        </ion-item>
-      </ion-col>
-       <ion-col>
-        <ion-item>
-          <ion-label>Low Temp:</ion-label>
-          <ion-card-subtitle>{{weatherresult.temperatureLow}}</ion-card-subtitle>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label>Low Temp Time:</ion-label>
-          <ion-card-subtitle>{{new Date(weatherresult.temperatureLowTime*1000).toLocaleTimeString()}}</ion-card-subtitle>
-        </ion-item>
-      </ion-col>
     </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <strong>Summary:</strong>
+            {{weatherresult.summary}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <strong>High Temp:</strong>
+            {{weatherresult.temperatureHigh}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <strong>High Temp Time:</strong>
+            {{new Date(weatherresult.temperatureHighTime*1000).toLocaleTimeString()}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <strong>Low Temp:</strong>
+           {{weatherresult.temperatureLow}}
+          </ion-label>
+        </ion-item>
+          <ion-item>
+          <ion-label>
+            <strong>Temp Time:</strong>
+           {{new Date(weatherresult.temperatureLowTime*1000).toLocaleTimeString()}}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>    
   </ion-card>
 </template>
 

@@ -60,7 +60,7 @@ export default {
           `https://api.darksky.net/forecast/${process.env.VUE_APP_DARKSKY_API_CODE}/${this.latitude},${this.longitude}?exclude=minutely,hourly,flags`
         )
         .then(res => {
-          if (res.status === 200) {            
+          if (res.status === 200) {
             this.weatherresults = res.data.daily.data;
           }
         })
