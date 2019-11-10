@@ -21,4 +21,6 @@ npm run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+API keys for darksky and google geocode are placed in .env file. They are excluded from commit. To run locally create a .env file at root folder and define keys VUE_APP_GEOCODE_API_CODE and VUE_APP_DARKSKY_API_CODE
+
+
