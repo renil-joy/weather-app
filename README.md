@@ -27,6 +27,8 @@ API keys for darksky and google geocode are placed in .env file. They are exclud
 6. VueJS (Modern Web Framework) – https://vuejs.org 
 7. VueJSCLI (CLI to create and manage project) – https://cli.vuejs.org/guide/installation.html
 8. https://firebase.google.com/ -This pwa is deployed in firebase at https://weatherapp-2be90.firebaseapp.com/
+9. Ionic 4 for styling - https://ionicframework.com/blog/introducing-ionic-4-ionic-for-everyone/
+
 
 
 
