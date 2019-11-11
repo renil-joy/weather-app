@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div  v-for="weatherresult in weatherresults" v-bind:key="weatherresult.time">
-      <WeatherInfoItem v-if="weatherresults" v-bind:weatherresult="weatherresult" />
+    <div  v-for="weatherResult in weatherResults" v-bind:key="weatherResult.time">
+      <WeatherInfoItem v-if="weatherResults" v-bind:weatherResult="weatherResult" />
     </div>
   </div>
 </template>
@@ -13,6 +13,6 @@ export default {
   components: {
     WeatherInfoItem
   },
-  props: ["weatherresults"]
+  props: ["weatherResults"]
 };
 </script>

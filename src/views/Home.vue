@@ -19,7 +19,8 @@
         </ion-item>
       </ion-col>
       <WeatherSearch v-on:get-city="getCityDetails" />
-      <WeatherInfo v-bind:weatherresults="weatherresults" />
+      <WeatherInfo v-bind:weatherResults="weatherResults" />
+      <WeatherInfoHourly v-bind:weatherResultsHourly="weatherResultsHourly" />
     </ion-content>
   </div>
 </template>
@@ -27,6 +28,7 @@
 <script>
 import WeatherSearch from "../components/WeatherSearch";
 import WeatherInfo from "../components/WeatherInfo";
+import WeatherInfoHourly from "../components/WeatherInfoHourly";
 import OnlineIndicator from "../components/OnlineIndicator";
 import AddFavourite from "../components/AddFavourite";
 import ViewFavourite from "../components/ViewFavourite";
@@ -40,6 +42,7 @@ export default {
   components: {
     WeatherSearch,
     WeatherInfo,
+    WeatherInfoHourly,
     OnlineIndicator,
     AddFavourite,
     ViewFavourite,
@@ -50,15 +53,22 @@ export default {
       latitude: "",
       longitude: "",
       searchCity: "",
-      weatherresults: [],
+      searchByHourly: false,
+      filter: "",
+      weatherResults: [],
+      weatherResultsHourly: [],
       favouriteCities: [],
       viewCities: []
     };
   },
   methods: {
-    getCityDetails(city) {
+    getCityDetails(city, hourly) {
       this.searchCity = city;
+      this.searchByHourly = hourly;
       this.viewCities = [];
+
+      console.log(this.searchByHourly);
+
       axios
         .get(
           `https://maps.googleapis.com/maps/api/geocode/json?address=${city},
@@ -80,33 +90,47 @@ export default {
 
     getWeatherDetailsByCoordinates(city) {
       //If result of same city in localstorage, dont call API
-      this.weatherresults = null;
-      if (localStorage.getItem(city)) {
+      if (!this.searchByHourly && localStorage.getItem(city)) {
+        this.weatherResults = null;
         try {
-          this.weatherresults = JSON.parse(localStorage.getItem(city));
+          this.weatherResults = JSON.parse(localStorage.getItem(city));
         } catch (e) {
           localStorage.removeItem(city);
         }
       }
-      if (null == this.weatherresults) {
+      if (null == this.weatherResults || this.searchByHourly) {
         console.log("Not in local storage");
+
+        if (this.searchByHourly) this.filter = "minutely,flags";
+        else this.filter = "minutely,hourly,flags";
+
         axios
           .get(
-            `https://api.darksky.net/forecast/${process.env.VUE_APP_DARKSKY_API_CODE}/${this.latitude},${this.longitude}?exclude=minutely,hourly,flags`
+            `https://api.darksky.net/forecast/${process.env.VUE_APP_DARKSKY_API_CODE}/${this.latitude},${this.longitude}?exclude=${this.filter}`
           )
           .then(res => {
             if (res.status === 200) {
-              this.weatherresults = res.data.daily.data;
+              if (this.searchByHourly) {
+                this.weatherResults = null;
+                this.weatherResultsHourly = res.data.hourly.data;
+              } else {
+                this.weatherResultsHourly = null;
+                this.weatherResults = res.data.daily.data;
+              }
 
-              const parsedResult = JSON.stringify(this.weatherresults);
-              localStorage.setItem(city, parsedResult);
-              console.log(city);
+              //Only Daily results stored in localstorage
+              if (!this.searchByHourly) {
+                const parsedResult = JSON.stringify(this.weatherResults);
+                localStorage.setItem(city, parsedResult);
+                console.log(city);
+              }
             }
           })
           .catch(err => this.showAlert(err.message));
       }
     },
     addToFavourites() {
+      console.log(this.searchCity);
       this.viewCities = [];
       if (this.searchCity.length == 0) this.showAlert("Search the city first");
 
@@ -152,7 +176,6 @@ export default {
     }
   },
   created() {
-    console.log("OK");
     if ("geolocation" in navigator) {
       console.log("Geolocation is  available.");
     }

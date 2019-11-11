@@ -10,10 +10,12 @@
             placeholder="Enter City Name"
             name="city"
           ></ion-input>
+          <ion-label>Search Hourly:</ion-label>
+          <input type="checkbox" v-model="hourly" true-value="true" false-value="false" />
         </ion-item>
       </ion-col>
       <ion-col>
-        <ion-button type="submit" color="primary" expand="block">Find</ion-button>        
+        <ion-button type="submit" color="primary" expand="block">Find</ion-button>
       </ion-col>
     </form>
   </ion-grid>
@@ -24,7 +26,8 @@ export default {
   name: "WeatherSearch",
   data() {
     return {
-      city: ""
+      city: "",
+      hourly: false
     };
   },
   methods: {
@@ -35,7 +38,7 @@ export default {
         this.showAlert();
         this.city = "";
       } else {
-        this.$emit("get-city", this.city);
+        this.$emit("get-city", this.city, this.hourly);
       }
     },
     showAlert() {

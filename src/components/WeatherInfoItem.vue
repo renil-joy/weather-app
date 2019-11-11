@@ -1,48 +1,49 @@
 <template>
-  <ion-card v-if="weatherresult">
+  <ion-card v-if="weatherResult">
     <ion-card-header>
-      <ion-card-title>{{new Date(weatherresult.time*1000).toLocaleDateString()}}</ion-card-title>
+      <ion-card-title>{{new Date(weatherResult.time*1000).toLocaleDateString()}}</ion-card-title>
+      <skycon :condition="weatherResult.icon" />
     </ion-card-header>
     <ion-card-content>
       <ion-list>
         <ion-item>
           <ion-label>
             <strong>Summary:</strong>
-            {{weatherresult.summary}}
+            {{weatherResult.summary}}
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
             <strong>High Temp:</strong>
-            {{weatherresult.temperatureHigh}}
+            {{weatherResult.temperatureHigh}}
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
             <strong>High Temp Time:</strong>
-            {{new Date(weatherresult.temperatureHighTime*1000).toLocaleTimeString()}}
+            {{new Date(weatherResult.temperatureHighTime*1000).toLocaleTimeString()}}
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
             <strong>Low Temp:</strong>
-           {{weatherresult.temperatureLow}}
+            {{weatherResult.temperatureLow}}
           </ion-label>
         </ion-item>
-          <ion-item>
+        <ion-item>
           <ion-label>
-            <strong>Temp Time:</strong>
-           {{new Date(weatherresult.temperatureLowTime*1000).toLocaleTimeString()}}
+            <strong>Low Temp Time:</strong>
+            {{new Date(weatherResult.temperatureLowTime*1000).toLocaleTimeString()}}
           </ion-label>
         </ion-item>
       </ion-list>
-    </ion-card-content>    
+    </ion-card-content>
   </ion-card>
 </template>
 
 <script>
 export default {
   name: "WeatherInfoItem",
-  props: ["weatherresult"]
+  props: ["weatherResult"]
 };
 </script>
