@@ -18,6 +18,13 @@ API keys for darksky and google geocode are placed in .env file. They are exclud
 7. User can save a city to favourites. This information is saved in localstorage
 8. User can view cities in current favourites.
 
+### Next steps and future features
+1. To use the application without CORS issue proxy server needs to be set up (https://darksky.net/dev/docs/faq#cross-origin). NodeJS   
+   Express can be used to do this.
+2. Users can select city from saved favourites which will give result for the selected city
+3. Input for city can be replaced with an autocomplete box giving input for valid places from another API
+4. Styling and overall design of screen can be improved
+
 ### List of open source, frameworks, APIs
 1. Sample pwa with VueJS and Ionic -https://github.com/bradtraversy/zip-info-pwa 
 2. To get coordinates of a location - https://maps.googleapis.com/maps/api/geocode/json 
