@@ -18,4 +18,15 @@ API keys for darksky and google geocode are placed in .env file. They are exclud
 7. User can save a city to favourites. This information is saved in localstorage
 8. User can view cities in current favourites.
 
+### List of open source, frameworks, APIs
+1. Sample pwa with VueJS and Ionic -https://github.com/bradtraversy/zip-info-pwa 
+2. To get coordinates of a location - https://maps.googleapis.com/maps/api/geocode/json 
+3. To get forecast based on coordates - https://api.darksky.net/
+4. NPM Package manager for vue cli, skycons, vue-offline, vetur - https://www.npmjs.com/ - 
+5. https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9 - darksky API prevents      CORS error. This link explains about possible work arounds.
+6. VueJS (Modern Web Framework) – https://vuejs.org 
+7. VueJSCLI (CLI to create and manage project) – https://cli.vuejs.org/guide/installation.html
+8. https://firebase.google.com/ -This pwa is deployed in firebase at https://weatherapp-2be90.firebaseapp.com/
+
+
 
