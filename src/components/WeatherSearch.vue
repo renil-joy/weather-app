@@ -13,8 +13,7 @@
         </ion-item>
       </ion-col>
       <ion-col>
-        <ion-button type="submit" color="primary" expand="block">Find</ion-button>
-        <ion-button color="danger" v-if="!isOnline">O</ion-button>
+        <ion-button type="submit" color="primary" expand="block">Find</ion-button>        
       </ion-col>
     </form>
   </ion-grid>

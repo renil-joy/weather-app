@@ -6,6 +6,18 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
+      <OnlineIndicator />
+      <ion-col>
+        <ion-item>
+          <AddFavourite v-on:add-favourite="addToFavourites" />
+          <ViewFavourite v-on:view-favourite="viewFavourites" />
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <FavouriteItem v-bind:favourites="viewCities" />
+        </ion-item>
+      </ion-col>
       <WeatherSearch v-on:get-city="getCityDetails" />
       <WeatherInfo v-bind:weatherresults="weatherresults" />
     </ion-content>
@@ -15,26 +27,38 @@
 <script>
 import WeatherSearch from "../components/WeatherSearch";
 import WeatherInfo from "../components/WeatherInfo";
+import OnlineIndicator from "../components/OnlineIndicator";
+import AddFavourite from "../components/AddFavourite";
+import ViewFavourite from "../components/ViewFavourite";
+import FavouriteItem from "../components/FavouriteItem";
 import axios from "axios";
+
+const FAV_CITIES_LIST = "FAV_CITIES_LIST";
 
 export default {
   name: "home",
   components: {
     WeatherSearch,
-    WeatherInfo
+    WeatherInfo,
+    OnlineIndicator,
+    AddFavourite,
+    ViewFavourite,
+    FavouriteItem
   },
   data() {
     return {
       latitude: "",
       longitude: "",
-      weatherresults: {
-        type: Array,
-        default: () => []
-      }
+      searchCity: "",
+      weatherresults: [],
+      favouriteCities: [],
+      viewCities: []
     };
   },
   methods: {
     getCityDetails(city) {
+      this.searchCity = city;
+      this.viewCities = [];
       axios
         .get(
           `https://maps.googleapis.com/maps/api/geocode/json?address=${city},
@@ -81,6 +105,41 @@ export default {
           })
           .catch(err => this.showAlert(err.message));
       }
+    },
+    addToFavourites() {
+      this.viewCities = [];
+      if (this.searchCity.length == 0) this.showAlert("Search the city first");
+
+      //Check if favourites exists
+      if (localStorage.getItem(FAV_CITIES_LIST)) {
+        try {
+          this.favouriteCities = JSON.parse(
+            localStorage.getItem(FAV_CITIES_LIST)
+          );
+        } catch (e) {
+          localStorage.removeItem(FAV_CITIES_LIST);
+        }
+      } else {
+        this.favouriteCities.push(this.searchCity);
+        localStorage.setItem(
+          FAV_CITIES_LIST,
+          JSON.stringify(this.favouriteCities)
+        );
+      }
+
+      if (this.favouriteCities.indexOf(this.searchCity) === -1) {
+        console.log("city not in favourites");
+        this.favouriteCities.push(this.searchCity);
+        localStorage.setItem(
+          FAV_CITIES_LIST,
+          JSON.stringify(this.favouriteCities)
+        );
+      }
+    },
+    viewFavourites() {
+      console.log("in view fav");
+      this.favouriteCities = JSON.parse(localStorage.getItem(FAV_CITIES_LIST));
+      this.viewCities = this.favouriteCities;
     },
     showAlert(msg) {
       return this.$ionic.alertController
