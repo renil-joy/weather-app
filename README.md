@@ -10,7 +10,7 @@ API keys for darksky and google geocode are placed in .env file. They are exclud
 
 ### Features available
 1. 7 day forecast based on current location (user has to give permission to share location)
-2. Summary information, Min and Max temperature of the day and their timings are shown for daily forecast. An icon indicating the summary    is also shown.
+2. Summary information, Min and Max temperature of the day and their timings are shown for daily forecast. An icon indicating the summary is also shown.
 3. Searched result is saved into localstorage for offline usage.
 4. A red information bar is show if user is not online
 5. User can search for hourly forecast of selected city which will give data for next 48 hours
@@ -19,8 +19,8 @@ API keys for darksky and google geocode are placed in .env file. They are exclud
 8. User can view cities in current favourites.
 
 ### Next steps and future features
-1. To use the application without CORS issue proxy server needs to be set up (https://darksky.net/dev/docs/faq#cross-origin). NodeJS   
-   Express can be used to do this.
+1. To use the application without CORS issue proxy server needs to be set up (https://darksky.net/dev/docs/faq#cross-origin). 
+   NodeJS and Express can be used to do this.
 2. Users can select city from saved favourites which will give result for the selected city
 3. Input for city can be replaced with an autocomplete box giving input for valid places from another API
 4. Styling and overall design of screen can be improved
